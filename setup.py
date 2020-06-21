@@ -8,9 +8,7 @@ setup(
     author_email="yao.ntno@google.com",
     license="TODO",
     packages=find_packages(),
-    package_data={
-        "random_char_image": ["py.typed"],
-    },
+    package_data={"random_char_image": ["py.typed"],},
     install_requires=["Pillow", "numpy",],
     extras_require={"dev": ["mypy", "pytest", "black",]},
 )

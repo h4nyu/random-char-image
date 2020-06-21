@@ -10,12 +10,15 @@ def test_image() -> None:
 
     ri = (
         RandomImage()
-        .with_config(fontsize=24, line_space=10, char_space=10, direction="column")
+        .with_config(fontsize=24, line_space=20, char_space=20, direction="column")
         .with_backgrand(br.get())
         .with_text(text)
     )
     for i, p in enumerate(glob("fonts/*.ttf")):
-        ri.with_label_font(p, i % 2)
+        if i % 2 == 0:
+            ri.with_label_font(p, label=0, is_random=True)
+        else:
+            ri.with_label_font(p, label=1, is_random=False)
 
     img, boxes, labels = ri.get()
     draw = ImageDraw.Draw(img)

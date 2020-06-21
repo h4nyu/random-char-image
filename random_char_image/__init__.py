@@ -46,7 +46,7 @@ class RandomImage:
         self.line_space = 4
         self.fontsize = 24
         self.text = TextRepo()
-        self.font_paths: t.Dict[str, int] = dict()
+        self.font_paths: t.Dict[str, t.Tuple[int, bool]] = dict()
         self.font_space = 4
 
     def with_config(
@@ -67,8 +67,10 @@ class RandomImage:
         self.size = img.size
         return self
 
-    def with_label_font(self, path: str, label: int = 0,) -> "RandomImage":
-        self.font_paths[path] = label
+    def with_label_font(
+        self, path: str, label: int = 0, is_random: bool = True
+    ) -> "RandomImage":
+        self.font_paths[path] = (label, is_random)
         return self
 
     def with_text(self, text: TextRepo) -> "RandomImage":
@@ -93,12 +95,16 @@ class RandomImage:
         font_paths = list(self.font_paths.keys())
         for c in self.text.get(char_count):
             fpath = random.choice(font_paths)
-            label = self.font_paths[fpath]
-            font = ImageFont.truetype(
-                fpath, int(self.fontsize * np.random.uniform(low=0.7, high=1.3)),
-            )
+            label, is_random = self.font_paths[fpath]
+            n_font = 1.0
+            if is_random:
+                n_font = np.random.uniform(low=0.7, high=1.3)
+            font = ImageFont.truetype(fpath, int(self.fontsize * n_font),)
             w, h = font.getsize(c)
-            n_x, n_y = 0.2 * (np.random.rand(2) - 0.5)
+            n_x = 0.0
+            n_y = 0.0
+            if is_random:
+                n_x, n_y = 0.2 * (np.random.rand(2) - 0.5)
             char_x: int = x + w * n_x
             char_y: int = y + h * n_y
             draw.text((char_x, char_y), c, font=font, fill="black")
