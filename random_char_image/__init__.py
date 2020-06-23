@@ -23,16 +23,16 @@ class TextRepo:
         return self.text[start : start + lenght]
 
 
-class BackgrandRepo:
+class BackgroundRepo:
     def __init__(self) -> None:
-        self.backgrands: t.List[Image] = []
+        self.backgrounds: t.List[Image] = []
 
-    def with_file(self, path: str) -> "BackgrandRepo":
-        self.backgrands.append(Image.open(path))
+    def with_file(self, path: str) -> "BackgroundRepo":
+        self.backgrounds.append(Image.open(path))
         return self
 
     def get(self) -> Image:
-        return random.choice(self.backgrands)
+        return random.choice(self.backgrounds)
 
 
 Direction = t.Literal["column", "row"]
@@ -48,6 +48,7 @@ class RandomImage:
         self.text = TextRepo()
         self.font_paths: t.Dict[str, t.Tuple[int, bool]] = dict()
         self.font_space = 4
+        self.background = Image.new("RGB", size=self.size, color=(255,255,255))
 
     def with_config(
         self,
@@ -62,8 +63,8 @@ class RandomImage:
         self.direction = direction
         return self
 
-    def with_backgrand(self, img: Image) -> "RandomImage":
-        self.blackgrand = img
+    def with_background(self, img: Image) -> "RandomImage":
+        self.background = img
         self.size = img.size
         return self
 
@@ -79,8 +80,8 @@ class RandomImage:
 
     def get(self) -> t.Tuple[t.Any, t.List[Box], t.List[int]]:
         img = (
-            self.blackgrand.copy()
-            if self.blackgrand is not None
+            self.background.copy()
+            if self.background is not None
             else Image.new("RGB", self.size)
         )
         draw = ImageDraw.Draw(img)
