@@ -27,6 +27,8 @@ def test_image() -> None:
         x0, y0, x1, y1 = box
         assert x1 < w
         assert y1 < h
+        assert x0 < w
+        assert y0 < h
         if label == 0:
             draw.rectangle(box, outline="red")
         else:

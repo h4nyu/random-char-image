@@ -94,6 +94,7 @@ class RandomImage:
         char_count = int(limit_y * limit_y // self.fontsize ** 2)
         font_paths = list(self.font_paths.keys())
         for c in self.text.get(char_count):
+
             fpath = random.choice(font_paths)
             label, is_random = self.font_paths[fpath]
             n_font = 1.0
@@ -104,16 +105,23 @@ class RandomImage:
             n_x = 0.0
             n_y = 0.0
             if is_random:
-                n_x, n_y = 0.2 * (np.random.rand(2) - 0.5)
-            char_x: int = x + w * n_x
-            char_y: int = y + h * n_y
-            draw.text((char_x, char_y), c, font=font, fill="black")
-            boxes.append((char_x, char_y, char_x + w, char_y + h))
-            labels.append(label)
+                n_x, n_y = (
+                    np.random.uniform(low=-0.5, high=0.5),
+                    np.random.uniform(low=-0.5, high=0.5),
+                )
+            x0 = x + w * n_x
+            y0 = y + h * n_y
+            x1 = x0 + w
+            y1 = y0 + h
+
+            if (x0 < limit_y) & (y0 < limit_y) & (x1 < limit_x) & (y1 < limit_y):
+                draw.text((x0, y0), c, font=font, fill="black")
+                boxes.append((x0, y0, x1, y1))
+                labels.append(label)
 
             if self.direction == "row":
                 x += self.font_space + w
-                if x > limit_x:
+                if x >= limit_x:
                     x = self.fontsize
                     y += line_height
 
@@ -126,4 +134,5 @@ class RandomImage:
                     x += line_height
                 if x >= limit_x:
                     break
+
         return img, boxes, labels
