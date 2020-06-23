@@ -117,13 +117,13 @@ class RandomImage:
                     x = self.fontsize
                     y += line_height
 
-                if y > limit_y:
+                if y >= limit_y:
                     break
             else:
                 y += self.font_space + h
-                if y > limit_y:
+                if y >= limit_y:
                     y = self.fontsize
                     x += line_height
-                if x > limit_x:
+                if x >= limit_x:
                     break
         return img, boxes, labels
