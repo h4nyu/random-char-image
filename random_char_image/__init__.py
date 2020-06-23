@@ -102,7 +102,7 @@ class RandomImage:
             char_x: int = x + w * n_x
             char_y: int = y + h * n_y
             draw.text((char_x, char_y), c, font=font, fill="black")
-            boxes.append((char_x, char_y, char_x + w, char_y + h))
+            boxes.append((char_x, char_y, w, h))
             labels.append(label)
 
             if self.direction == "row":
