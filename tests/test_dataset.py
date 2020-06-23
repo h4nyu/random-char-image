@@ -24,9 +24,9 @@ def test_image() -> None:
     draw = ImageDraw.Draw(img)
     w, h = img.size
     for box, label in zip(boxes, labels):
-        x0, y0, box_w, box_h = box
-        assert x0 + box_w <= w
-        assert y0 + box_h <= h
+        x0, y0, x1, y1 = box
+        assert x1 < w
+        assert y1 < h
         if label == 0:
             draw.rectangle(box, outline="red")
         else:
