@@ -20,7 +20,7 @@ def test_image() -> None:
         else:
             ri.with_label_font(p, label=1, is_random=False)
 
-    img, boxes, labels = ri.get()
+    img, boxes, labels, _ = ri.get()
     draw = ImageDraw.Draw(img)
     w, h = img.size
     for box, label in zip(boxes, labels):
@@ -33,7 +33,8 @@ def test_image() -> None:
             draw.rectangle(box, outline="red")
         else:
             draw.rectangle(box, outline="blue")
-    img.save("test.png")
+    img.save("/store/test.png")
+
 
 def test_image_without_background() -> None:
     text = TextRepo().with_file("texts/hvt.txt")
@@ -49,7 +50,7 @@ def test_image_without_background() -> None:
         else:
             ri.with_label_font(p, label=1, is_random=False)
 
-    img, boxes, labels = ri.get()
+    img, boxes, labels, _ = ri.get()
     draw = ImageDraw.Draw(img)
     w, h = img.size
     for box, label in zip(boxes, labels):
@@ -62,4 +63,4 @@ def test_image_without_background() -> None:
             draw.rectangle(box, outline="red")
         else:
             draw.rectangle(box, outline="blue")
-    img.save("without-background.png")
+    img.save("/store/without-background.png")

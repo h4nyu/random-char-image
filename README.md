@@ -19,14 +19,13 @@ for i, p in enumerate(glob("fonts/*.ttf")):
     else:
         ri.with_label_font(p, label=1, is_random=False)
 
-img, boxes, labels = ri.get()
+img, boxes, labels, chars = ri.get()
 draw = ImageDraw.Draw(img)
-for box, label in zip(boxes, labels):
+for box, label, in zip(boxes, labels):
     if label == 0:
         draw.rectangle(box, outline="red")
     else:
         draw.rectangle(box, outline="blue")
 img.save("test.png")
 ```
-
-![example](./test.png)
+![example][./example.png]

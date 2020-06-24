@@ -48,7 +48,7 @@ class RandomImage:
         self.text = TextRepo()
         self.font_paths: t.Dict[str, t.Tuple[int, bool]] = dict()
         self.font_space = 4
-        self.background = Image.new("RGB", size=self.size, color=(255,255,255))
+        self.background = Image.new("RGB", size=self.size, color=(255, 255, 255))
 
     def with_config(
         self,
@@ -78,7 +78,7 @@ class RandomImage:
         self.text = text
         return self
 
-    def get(self) -> t.Tuple[t.Any, t.List[Box], t.List[int]]:
+    def get(self) -> t.Tuple[t.Any, t.List[Box], t.List[int], t.List[str]]:
         img = (
             self.background.copy()
             if self.background is not None
@@ -92,10 +92,10 @@ class RandomImage:
         line_height = self.fontsize + self.line_space
         boxes = []
         labels = []
+        chars = []
         char_count = int(limit_y * limit_y // self.fontsize ** 2)
         font_paths = list(self.font_paths.keys())
         for c in self.text.get(char_count):
-
             fpath = random.choice(font_paths)
             label, is_random = self.font_paths[fpath]
             n_font = 1.0
@@ -119,6 +119,7 @@ class RandomImage:
                 draw.text((x0, y0), c, font=font, fill="black")
                 boxes.append((x0, y0, x1, y1))
                 labels.append(label)
+                chars.append(c)
 
             if self.direction == "row":
                 x += self.font_space + w
@@ -136,4 +137,4 @@ class RandomImage:
                 if x >= limit_x:
                     break
 
-        return img, boxes, labels
+        return img, boxes, labels, chars
