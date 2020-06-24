@@ -28,4 +28,4 @@ for box, label, in zip(boxes, labels):
         draw.rectangle(box, outline="blue")
 img.save("test.png")
 ```
-![example][./example.png]
+![example](./example.png)
