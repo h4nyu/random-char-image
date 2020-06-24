@@ -40,8 +40,8 @@ Box = t.Tuple[int, int, int, int]
 
 
 class RandomImage:
-    def __init__(self,) -> None:
-        self.size = (512, 512)
+    def __init__(self, size:t.Tuple[int, int]=(512, 512)) -> None:
+        self.size = size
         self.direction = "row"
         self.line_space = 4
         self.fontsize = 24
